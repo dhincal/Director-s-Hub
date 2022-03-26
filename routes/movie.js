@@ -3,6 +3,7 @@ var router = express.Router();
 
 const Movie = require('../models/Movie');
 
+
 //Find all movies
 router.get('/', (req, res) => {
   const promise = Movie.find({});
@@ -60,6 +61,18 @@ router.delete('/:movieId', (req, res, next) => {
   }).catch(() => {
     next({message: "No movie found", code:90});
   });
+});
+
+//List Top 10 Movies
+router.get('/list/topten', (req,res) => {
+  const promise = Movie.find({}).limit(10).sort({imdbScore:-1});
+
+  promise.then((data) => {
+    res.json(data);
+  }).catch((err) => {
+    res.json(err);
+  });
 })
+
 
 module.exports = router;
