@@ -41,9 +41,19 @@ router.put('/:movieId', (req, res, next) => {
   const promise = Movie.findByIdAndUpdate(req.params.movieId, req.body, {new:true});
   
   promise.then((movie) => {
-    res.json(movie);
+    res.json({status:200});
   }).catch((err) => {
     next({ message:"No movie found", code:90});
+  });
+});
+
+router.delete('/:movieId', (req, res, next) => {
+  const promise = Movie.findByIdAndDelete(req.params.movieId);
+
+  promise.then((data) => {
+    res.json({status:1});
+  }).catch((err) => {
+    next({message: "No movie found", code:90});
   });
 })
 
