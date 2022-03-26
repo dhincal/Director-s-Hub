@@ -63,7 +63,7 @@ router.delete('/:movieId', (req, res, next) => {
   });
 });
 
-//List Top 10 Movies
+//Sort Top 10 Movies
 router.get('/list/topten', (req,res) => {
   const promise = Movie.find({}).limit(10).sort({imdbScore:-1});
 
@@ -72,6 +72,22 @@ router.get('/list/topten', (req,res) => {
   }).catch((err) => {
     res.json(err);
   });
+});
+
+//List The Movies Made Between Dates
+router.get('/list/between/:startYear/:endYear', (req,res) => {
+  const {startYear, endYear} = req.params;
+  const promise = Movie.find(
+    {
+      year: {"$gte" : parseInt(startYear), "$lte" : parseInt(endYear)}
+    }
+  );
+
+  promise.then((data) => {
+    res.json(data);
+  }).catch((err) => {
+    res.json(err)
+  })
 })
 
 
