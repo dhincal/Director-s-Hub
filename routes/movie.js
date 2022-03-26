@@ -3,6 +3,7 @@ var router = express.Router();
 
 const Movie = require('../models/Movie');
 
+//Find all movies
 router.get('/', (req, res) => {
   const promise = Movie.find({});
   promise.then((data) => {
@@ -12,6 +13,7 @@ router.get('/', (req, res) => {
   })
 })
 
+//Find movies by ID
 router.get('/:movieId', (req,res,next) => {
   const promise = Movie.findById(req.params.movieId);
 
@@ -24,6 +26,7 @@ router.get('/:movieId', (req,res,next) => {
 
 });
 
+//Create a new Movie
 router.post('/', (req, res, next) => {
   
   const movie = new Movie(req.body);
@@ -37,22 +40,24 @@ router.post('/', (req, res, next) => {
 
 });
 
+//Update an Movie
 router.put('/:movieId', (req, res, next) => {
   const promise = Movie.findByIdAndUpdate(req.params.movieId, req.body, {new:true});
   
   promise.then((movie) => {
     res.json({status:200});
-  }).catch((err) => {
+  }).catch(() => {
     next({ message:"No movie found", code:90});
   });
 });
 
+//Delete an Movie
 router.delete('/:movieId', (req, res, next) => {
   const promise = Movie.findByIdAndDelete(req.params.movieId);
 
   promise.then((data) => {
     res.json({status:1});
-  }).catch((err) => {
+  }).catch(() => {
     next({message: "No movie found", code:90});
   });
 })
