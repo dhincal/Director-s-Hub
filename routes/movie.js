@@ -37,4 +37,14 @@ router.post('/', (req, res, next) => {
 
 });
 
+router.put('/:movieId', (req, res, next) => {
+  const promise = Movie.findByIdAndUpdate(req.params.movieId, req.body, {new:true});
+  
+  promise.then((movie) => {
+    res.json(movie);
+  }).catch((err) => {
+    next({ message:"No movie found", code:90});
+  });
+})
+
 module.exports = router;
