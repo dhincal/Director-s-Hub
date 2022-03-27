@@ -23,7 +23,7 @@ const MovieSchema = new Schema({
     year: {
         type:Number,
         max: 2022,
-        min:1900
+        min: 1900
     },
     imdbScore: {
         type: Number,
