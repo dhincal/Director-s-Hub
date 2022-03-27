@@ -6,12 +6,30 @@ const MovieSchema = new Schema({
     directorId: Schema.Types.ObjectId,
     title:{
         type: String,
-        required: true,
+        required: [true, '`{PATH}` space is required'],
+        maxlength:[15, '`{PATH}` space must be maximum (`{MAXLENGTH}`)'],
+        minlength:[2, '`{PATH}` space must be minimum (`{MINLENGTH}`)'],
     },
-    category: String,
-    country: String,
-    year: Number,
-    imdbScore: Number,
+    category: {
+        type: String,
+        maxlength:[30, '`{PATH}` space must be maximum (`{MAXLENGTH}`)'],
+        minlength:[2, '`{PATH}` space must be minimum (`{MINLENGTH}`)'],
+    },
+    country: {
+        type: String,
+        maxlength:[30, '`{PATH}` space must be maximum (`{MAXLENGTH}`)'],
+        minlength:[2, '`{PATH}` space must be minimum (`{MINLENGTH}`)'],
+    },
+    year: {
+        type:Number,
+        max: 2022,
+        min:1900
+    },
+    imdbScore: {
+        type: Number,
+        max: 10,
+        min: 0
+    },
     createdAt:{
         type: Date,
         default: Date.now(),
