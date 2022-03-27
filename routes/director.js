@@ -62,7 +62,7 @@ router.get('/', (req, res) => {
     })
 });
 
-//Get an Spesific Director
+//Get an Specific Director
 router.get('/:directorId', (req, res) => {
     const promise = Director.aggregate([
         {
@@ -112,6 +112,23 @@ router.get('/:directorId', (req, res) => {
         res.json(err);
     })
 });
+
+//Update an Director
+router.put('/:directorId', (req, res) => {
+    const promise = Director.findByIdAndUpdate(
+        req.params.directorId,
+        req.body,
+        {
+            new:true,
+        }
+    );
+    promise.then((data) => {
+        res.json(data);
+    }).catch((err) => {
+        next({message: 'No such director', code: 404});
+    });
+});
+
 
 
 module.exports = router;
