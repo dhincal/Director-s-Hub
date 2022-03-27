@@ -125,7 +125,18 @@ router.put('/:directorId', (req, res) => {
     promise.then((data) => {
         res.json(data);
     }).catch((err) => {
-        next({message: 'No such director', code: 404});
+        next({message: 'No such director found', code: 404});
+    });
+});
+
+//Delete an Director
+router.delete('/:directorId', (req, res, next) => { 
+    const promise = Director.findByIdAndDelete(req.params.directorId);
+
+    promise.then((data) => {
+        res.json({status: 1});
+    }).catch(() => {
+        next({message: 'No such director found director', code:404});
     });
 });
 
