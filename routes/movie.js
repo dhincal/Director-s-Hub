@@ -6,7 +6,20 @@ const Movie = require('../models/Movie');
 
 //Find all movies
 router.get('/', (req, res) => {
-  const promise = Movie.find({});
+  const promise = Movie.aggregate([
+    {
+      $lookup:{
+        from:'directors', 
+        localField:'directorId',
+        foreignField:'_id', 
+        as:'director'
+      }
+    },
+    { 
+      $unwind: '$director'
+    }
+  
+  ]);
   promise.then((data) => {
     res.json(data);
   }).catch((err) => {
